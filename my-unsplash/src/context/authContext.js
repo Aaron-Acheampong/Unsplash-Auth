@@ -1,28 +1,38 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-export const AuthContext = createContext();
+const AuthContext = createContext({});
 
-export const AuthContextProvider = ({children})=>{
+export const AuthProvider = ({children})=>{
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+    const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false);
 
     const login = async (inputs) => {
-        const res = await axios.post("/auth/login", inputs);
-        setCurrentUser(res.data);
+        const res = await axios.post("/api/auth/login", inputs);
+        const accessToken = res?.data?.accessToken;
+        const roles = res?.data?.roles;
+        setCurrentUser({ ...inputs, roles, accessToken });
     };
 
-    const logout = async (inputs) => {
-        const res = await axios.post("/auth/logout", inputs);
+   /* const logout = async (inputs) => {
+        const res = await axios.post("/api/auth/logout");
+        localStorage.removeItem("user");
         setCurrentUser(null);
-    };
+    }; */
 
-    useEffect(() => {
-        localStorage.setItem("user", JSON.stringify(currentUser));
-    }, [currentUser]);
+    const register = async (inputs) => {
+        const res = await axios.post("/api/auth/register", inputs,
+        {
+            headers: { 'Content-Type': 'application/json'},
+            withCredentials: true
+        }); 
+    };
 
     return (
-        <AuthContext.Provider value={{currentUser, login, logout}}>
+        <AuthContext.Provider value={{currentUser, setCurrentUser, persist, setPersist, login, register}}>
             {children}
         </AuthContext.Provider>
     );
 }
+
+export default AuthContext;

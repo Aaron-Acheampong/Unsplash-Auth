@@ -1,9 +1,11 @@
 import { sequelize }  from "../model/db.js";
-//const db = require('../model/db.js');
+import { Users } from "../model/Users.js";
+//import jwt from "jsonwebtoken";
+import { Op } from "sequelize";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const register = (req, res)=>{
+export const register = async (req, res)=>{
     //CHECK EXISTING USER
     // const q = "SELECT * FROM users WHERE email = ? OR username = ?";
     // db.all(q, [req.body.email], (err, data)=>{
@@ -25,6 +27,9 @@ export const register = (req, res)=>{
     //         return res.status(200).json("User has been created.");
     //     });
     // });
+    console.log("Registering new User!!!!!")
+    await Users.create(req.body);
+    return res.send("User Registered!!!");
 };
 
 export const login = (req, res)=>{
@@ -44,6 +49,8 @@ export const login = (req, res)=>{
 
     //     res.cookie("access_token", token, {
     //         httpOnly: true,
+    //         sameSite: 'None,
+    //         maxAge: 24 * 60 * 60 * 1000
     //     }).status(200).json(other);
         
     // });
@@ -51,7 +58,7 @@ export const login = (req, res)=>{
 
 export const logout = (req, res)=>{
     // res.clearCookie("access_token", {
-    //     samesite:"none",
+    //     samesite:"None",
     //     secure:true
     // }).status(200).json("User has been logged out.");
 };

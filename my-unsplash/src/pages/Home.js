@@ -8,12 +8,18 @@ import Images from '../components/Images';
 import { Link, useNavigate } from 'react-router-dom';
 //import { AuthContext } from '../context/authContext';
 import axios from 'axios';
+import useLogout from '../hooks/useLogout';
 
 export default function Home() {
 
-  //const {currentUser, logout} = useContext(AuthContext);
+  const navigate = useNavigate();
+    const logout = useLogout();
 
-  //const navigate = useNavigate();
+    const signOut = async () => {
+        await logout();
+        navigate('/login');
+    }
+
   const [images, setImages] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
