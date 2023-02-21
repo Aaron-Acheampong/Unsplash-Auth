@@ -5,6 +5,23 @@ export const sequelize = new Sequelize('splash-db', 'user', 'pass', {
     dialect: 'sqlite',
     host: './model/splash.sqlite',
 });
+
+/*
+sequelize.authenticate().then(() => { 
+    console.log('Connection has been established successfully.');
+}).catch((err) => {
+    console.log("Unable to connect to database.");
+});
+
+*/
+
+
+
+
+
+
+
+
 // export const db = new sqlite3.Database(`./splash.sqlite3`, sqlite3.OPEN_READWRITE, (err) => {
 //     if (err) return console.error(err.message);
 

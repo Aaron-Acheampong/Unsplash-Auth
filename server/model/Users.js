@@ -1,20 +1,29 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize }  from "../model/db.js";
 
-export class Users extends Model {}
+export class User extends Model {}
 
-Users.init({
+User.init({
     // id: {
     //     type: DataTypes.INTEGER
     // }, 
-    label: {
-        type: DataTypes.STRING
+    Username: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    url: {
-        type: DataTypes.STRING
+    Email: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    date: {
-        type: DataTypes.DATE
+    Password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Roles: {
+        type: DataTypes.INTEGER,
+    },
+    Refreshtoken: {
+        type: DataTypes.STRING,
     }
 }, {
     sequelize,

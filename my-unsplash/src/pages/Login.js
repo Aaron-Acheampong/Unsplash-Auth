@@ -93,7 +93,9 @@ export default function Login() {
             setErrMsg('No Server Response');
         } else if (err.response?.status === 409) {
             setErrMsg('Username Taken');
-        } else {
+        } else if (err.response?.status === 400) {
+          setErrMsg('Missing Credentials');
+      } else {
             setErrMsg('Registration Failed')
         }
         }
